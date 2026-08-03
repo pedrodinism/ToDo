@@ -1,11 +1,14 @@
-export function renderProjects(projects) {
-    const projectContainer = document.querySelector('.projectContainer')
-    projectContainer.innerHTML = ''
+import { createProject, getProjects } from "../controller/controller"
+
+export function renderProjects() {
+    const projectList = document.querySelector('#projectList')
+    projectList.innerHTML = ''
+    const projects = getProjects()
     projects.forEach((project) => {
             let div = document.createElement('div')
             div.id = 'project-' +  project.id
             div.textContent = project.title
-            projectContainer.appendChild(div)
+            projectList.appendChild(div)
         })
 }
 
@@ -19,6 +22,17 @@ export function renderLayout() {
     mainContent.appendChild(renderToDosContainer())
 }
 
+export function init() {
+    document.addEventListener('click', (event) => {
+        switch(event.target.id) {
+            case 'btnAddProject': 
+                createProject('Test')
+                renderProjects()
+        }
+
+    })
+}
+
 function renderTopContainer() {
     const topContainer = document.createElement('div')
     topContainer.classList.add('topContainer')
@@ -28,6 +42,13 @@ function renderTopContainer() {
 function renderProjectContainer() {
     const projectContainer = document.createElement('div')
     projectContainer.classList.add('projectContainer')
+    const btnAddProject = document.createElement('button')
+    btnAddProject.id = 'btnAddProject'
+    btnAddProject.textContent = 'New project'
+    projectContainer.appendChild(btnAddProject)
+    const projectList = document.createElement('div')
+    projectContainer.appendChild(projectList)
+    projectList.id = 'projectList'
     return projectContainer
 }
 
