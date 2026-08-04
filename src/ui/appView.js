@@ -6,6 +6,7 @@ export function renderProjects() {
     const projects = getProjects()
     projects.forEach((project) => {
             let div = document.createElement('div')
+            div.classList.add('projectFolder')
             div.id = 'project-' +  project.id
             div.textContent = project.title
             projectList.appendChild(div)
@@ -24,8 +25,8 @@ export function renderLayout() {
 
 export function init() {
     document.addEventListener('click', (event) => {
-        switch(event.target.id) {
-            case 'btnAddProject': 
+        switch(event.target.dataset.action) {
+            case 'add-project': 
                 createProject('Test')
                 renderProjects()
         }
@@ -36,19 +37,27 @@ export function init() {
 function renderTopContainer() {
     const topContainer = document.createElement('div')
     topContainer.classList.add('topContainer')
+    topContainer.textContent = 'To Do'
     return topContainer
 }
 
 function renderProjectContainer() {
     const projectContainer = document.createElement('div')
     projectContainer.classList.add('projectContainer')
+
+    const projectActions = document.createElement('div')
+    projectActions.classList.add('projectActions')
+    
     const btnAddProject = document.createElement('button')
-    btnAddProject.id = 'btnAddProject'
     btnAddProject.textContent = 'New project'
-    projectContainer.appendChild(btnAddProject)
+    btnAddProject.setAttribute('data-action', 'add-project')
+    projectActions.appendChild(btnAddProject)
+    projectContainer.appendChild(projectActions)
+
     const projectList = document.createElement('div')
     projectContainer.appendChild(projectList)
     projectList.id = 'projectList'
+
     return projectContainer
 }
 

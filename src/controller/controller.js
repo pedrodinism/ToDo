@@ -7,8 +7,9 @@ export function getProjects() {
 }
 
 export function createProject(title) {
-    const proj = new Project(title)
-    projects.push(proj)
+    const project = new Project(title)
+    projects.push(project)
+    return project
 }
 
 export function testInit() {
