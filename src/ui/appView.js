@@ -1,4 +1,4 @@
-import { createProject, getProjects } from "../controller/controller"
+import { createProject, getProjects, selectProject, getSelectedProject } from "../controller/controller"
 
 export function renderProjects() {
     const projectList = document.querySelector('#projectList')
@@ -8,10 +8,18 @@ export function renderProjects() {
     projects.forEach((project) => {
             let div = document.createElement('div')
             div.classList.add('projectFolder')
+            div.setAttribute('data-action', 'select-project')
             div.id = 'project-' +  project.id
             div.textContent = project.title
             projectList.appendChild(div)
         })
+}
+
+export function renderToDos() {
+    const toDosContainer = document.querySelector('.toDosContainer')
+    toDosContainer.innerHTML = ''
+    toDosContainer.textContent = getSelectedProject()
+
 }
 
 export function renderLayout() {
@@ -27,16 +35,24 @@ export function renderLayout() {
 
 export function init() {
     document.addEventListener('click', (event) => {
-        event.preventDefault()
         switch(event.target.dataset.action) {
             case 'save-project':
+                event.preventDefault()
                 closeDialog()
-                const projectTitle = document.querySelector('#inputProjectTitle').value
-                createProject(projectTitle)
+                const projectTitle = document.querySelector('#inputProjectTitle')
+                createProject(projectTitle.value)
                 renderProjects()
-                
+                projectTitle.value = ''
+                break
             case 'show-project-modal':
                 openDialog()
+                break
+            case 'select-project':
+                let id = event.target.id.replace('project-', '')
+                console.log(id)
+                selectProject(event.target.id)
+                renderToDos()
+                break
         }
 
     })
