@@ -4,21 +4,15 @@ export function renderProjects() {
     const projectList = document.querySelector('#projectList')
     projectList.innerHTML = ''
     const projects = getProjects()
-    console.log(projects)
     projects.forEach((project) => {
-            let div = document.createElement('div')
-            div.classList.add('projectFolder')
-            div.setAttribute('data-action', 'select-project')
-            div.id = 'project-' +  project.id
-            div.textContent = project.title
-            projectList.appendChild(div)
+            renderProjectFolder(project)
         })
 }
 
 export function renderToDos() {
     const toDosContainer = document.querySelector('.toDosContainer')
     toDosContainer.innerHTML = ''
-    toDosContainer.textContent = getSelectedProject()
+    //toDosContainer.textContent = getSelectedProject().title
 
 }
 
@@ -48,10 +42,10 @@ export function init() {
                 openDialog()
                 break
             case 'select-project':
-                let id = event.target.id.replace('project-', '')
-                console.log(id)
-                selectProject(event.target.id)
+                const projectId = event.target.closest('[data-project-id]').dataset.projectId
+                selectProject(projectId)
                 renderToDos()
+                renderProjects()
                 break
         }
 
@@ -79,10 +73,24 @@ function renderProjectContainer() {
     projectContainer.appendChild(projectActions)
 
     const projectList = document.createElement('div')
-    projectContainer.appendChild(projectList)
     projectList.id = 'projectList'
+    projectContainer.appendChild(projectList)    
 
     return projectContainer
+}
+
+function renderProjectFolder(project) {
+    const div = document.createElement('div')
+    div.classList.add('projectFolder')
+    div.setAttribute('data-action', 'select-project')
+    div.dataset.projectId = project.id
+    div.textContent = project.title
+    console.log(getSelectedProject().id)
+    //if(getSelectedProject().project.id === project.id) {
+    //    div.classList.add('bg-color-yellow')
+    //}
+    projectList.appendChild(div)
+
 }
 
 function renderToDosContainer() {

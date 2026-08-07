@@ -4,6 +4,7 @@ let projects = []
 let selectedProject = ''
 
 export function getProjects() {
+    console.log(projects)
     return projects
 }
 
@@ -22,5 +23,6 @@ export function selectProject(id) {
 }
 
 export function getSelectedProject() {
+    selectedProject = projects.find(project => project.id === selectedProject)
     return selectedProject
 }

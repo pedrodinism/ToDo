@@ -7,7 +7,7 @@ import "./ui/styles.css";
 function startApp() {
     renderLayout()
     init()
-    testInit()
+    //testInit()
     renderProjects()
     renderToDos()
 }

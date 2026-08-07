@@ -9,7 +9,7 @@ export class Project {
         this.todos.push(toDo)
     }
 
-    removeToDo (index) {
-        this.todos.splice(index, 1)
+    removeToDo(id) {
+        this.todos = this.todos.filter(todo => todo.id !== id)        
     }
 }
