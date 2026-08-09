@@ -10,9 +10,9 @@ export function renderProjects() {
 }
 
 export function renderToDos() {
-    const toDosContainer = document.querySelector('.toDosContainer')
+    const toDosContainer = document.querySelector('#toDosList')
     toDosContainer.innerHTML = ''
-    //toDosContainer.textContent = getSelectedProject().title
+    toDosContainer.textContent = getSelectedProject()?.title
 
 }
 
@@ -85,10 +85,10 @@ function renderProjectFolder(project) {
     div.setAttribute('data-action', 'select-project')
     div.dataset.projectId = project.id
     div.textContent = project.title
-    console.log(getSelectedProject().id)
-    //if(getSelectedProject().project.id === project.id) {
-    //    div.classList.add('bg-color-yellow')
-    //}
+    if(project.id === getSelectedProject()?.id) {
+        div.classList.add('bg-color-yellow')
+    }
+    const projectList = document.querySelector('#projectList')
     projectList.appendChild(div)
 
 }
@@ -96,6 +96,16 @@ function renderProjectFolder(project) {
 function renderToDosContainer() {
     const toDosContainer = document.createElement('div')
     toDosContainer.classList.add('toDosContainer')
+
+    const btnNewTodo = document.createElement('button')
+    btnNewTodo.textContent = 'Add To Do'
+    btnNewTodo.setAttribute('data-action', 'add-to-do')
+    toDosContainer.appendChild(btnNewTodo)
+
+    const toDosList = document.createElement('div')
+    toDosList.id = 'toDosList'
+    toDosContainer.appendChild(toDosList)
+
     return toDosContainer
 }
 

@@ -1,7 +1,7 @@
 import { Project } from "../models/projects.js"
 
 let projects = []
-let selectedProject = ''
+let selectedProjectId = null
 
 export function getProjects() {
     console.log(projects)
@@ -19,10 +19,10 @@ export function testInit() {
 }
 
 export function selectProject(id) {
-    selectedProject = id
+    selectedProjectId = id
 }
 
 export function getSelectedProject() {
-    selectedProject = projects.find(project => project.id === selectedProject)
+    const selectedProject = projects.find(project => project.id === selectedProjectId)
     return selectedProject
 }
