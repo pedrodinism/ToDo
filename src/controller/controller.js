@@ -1,4 +1,5 @@
 import { Project } from "../models/projects.js"
+import { ToDo } from "../models/todo.js"
 
 let projects = []
 let selectedProjectId = null
@@ -25,4 +26,15 @@ export function selectProject(id) {
 export function getSelectedProject() {
     const selectedProject = projects.find(project => project.id === selectedProjectId)
     return selectedProject
+}
+
+export function addToDo (title) {
+    const toDo = new ToDo(title)
+    const project = projects.find(project => project.id === selectedProjectId)
+    project.addToDo(toDo)
+}
+
+export function getToDos () {
+    const project = getSelectedProject()
+    return project.getToDos()
 }

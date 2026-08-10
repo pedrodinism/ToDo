@@ -9,7 +9,7 @@ function startApp() {
     init()
     //testInit()
     renderProjects()
-    renderToDos()
+    //renderToDosContainer()
 }
 
 startApp();

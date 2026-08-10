@@ -12,4 +12,8 @@ export class Project {
     removeToDo(id) {
         this.todos = this.todos.filter(todo => todo.id !== id)        
     }
+
+    getToDos() {
+        return this.todos
+    }
 }

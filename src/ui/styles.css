@@ -26,19 +26,24 @@ body {
     width: 50vw;
 }
 
-.projectContainer {
-    border-right: 1px solid black;
+.projectContainer,
+.toDosContainer {
     margin: 20px;
 }
 
-.projectActions {
+.projectContainer {
+    border-right: 1px solid black;
+}
+
+.actions {
     display: flex;
     justify-content: end;
     align-items: center;
     margin: 20px;
 }
 
-.projectFolder {
+.projectFolder,
+.toDoFolder {
     border: 1px solid black;
     width: 150px;
     height: 150px;
@@ -47,7 +52,8 @@ body {
     justify-content: center;
 }
 
-#projectList {
+#projectList,
+#toDosList {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
