@@ -1,28 +1,10 @@
 import { getToDos } from "../controller/controller"
 import { getSelectedProject } from "../controller/controller"
+import { openDialog, closeDialog } from "../utils"
 
-export function renderToDos() {
-    const toDosContainer = document.querySelector('#toDosList')
-    toDosContainer.innerHTML = ''
-    const toDos = getToDos()
-    toDos.forEach((toDo) => {
-        renderToDoFolder(toDo)
-    })
-    
-}
+export const TODO_DIALOG_ID = 'toDoDialog'
 
-function renderToDoFolder(toDo) {
-    const div = document.createElement('div')
-    div.classList.add('toDoFolder')
-    div.setAttribute('data-action', 'select-todo')
-    div.dataset.todoId = toDo.id
-    div.textContent = toDo.title
-
-    const toDoList = document.querySelector('#toDosList')
-    toDoList.appendChild(div)
-}
-
-function renderToDosContainer() {
+export function renderToDosContainer() {
     let toDosContainer = document.querySelector('.toDosContainer')
     const mainContent = document.querySelector('.mainContent')
 
@@ -57,18 +39,48 @@ function renderToDosContainer() {
         toDosActions.appendChild(btnNewTodo)
     }
 
-
     const toDosList = document.createElement('div')
     toDosList.id = 'toDosList'
     toDosContainer.appendChild(toDosList)
 
     mainContent.appendChild(toDosContainer)
+    renderToDoDialog()
+    renderToDos()
+}
+
+function renderToDos() {
+    const toDosContainer = document.querySelector('#toDosList')
+    toDosContainer.innerHTML = ''
+    const toDos = getToDos()
+    if(toDos && toDos.length > 0) {
+        toDos.forEach((toDo) => {
+            renderToDoFolder(toDo)
+        })
+    }
+    else {
+        const toDoList = document.querySelector('#toDosList')
+        toDoList.textContent = 'No to dos to show for this project...'
+    }
+}
+
+function renderToDoFolder(toDo) {
+    const div = document.createElement('div')
+    div.classList.add('toDoFolder')
+    div.setAttribute('data-action', 'select-todo')
+    div.dataset.todoId = toDo.id
+    div.textContent = toDo.title
+
+    const toDoList = document.querySelector('#toDosList')
+    toDoList.appendChild(div)
 }
 
 function renderToDoDialog() {
+    if (document.querySelector(TODO_DIALOG_ID)) {
+        return
+    }
     const body = document.querySelector('body')
     const toDoDialog = document.createElement('dialog')
-    toDoDialog.id = 'toDoDialog'
+    toDoDialog.id = TODO_DIALOG_ID
 
     const titleDialog = document.createElement('div')
     titleDialog.textContent = 'Edit to do'

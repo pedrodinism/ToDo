@@ -1,16 +1,15 @@
 import { createProject, getProjects, selectProject, getSelectedProject, addToDo, getToDos } from "../controller/controller"
-import { renderToDosContainer } from "./toDoView.js"
-import { renderProjectsDialog, saveProject } from "./projectView.js"
+import { renderToDosContainer, TODO_DIALOG_ID } from "./toDoView.js"
+import { renderProjectContainer, saveProject, PROJECT_DIALOG_ID } from "./projectView.js"
+import { openDialog, closeDialog } from "../utils"
 
 export function renderLayout() {
     const body = document.querySelector('body')
     body.innerHTML = ''
-    body.appendChild(renderTopContainer())
-    const mainContent = renderMainContent()
-    body.appendChild(mainContent)
+    renderTopContainer()
+    renderMainContent()
     renderProjectContainer()
     renderToDosContainer()
-    renderToDoDialog()
 }
 
 export function init() {
@@ -21,40 +20,41 @@ export function init() {
                 break
             case 'save-todo':
                 event.preventDefault()
-                closeDialog('#toDoDialog')
+                closeDialog(TODO_DIALOG_ID)
                 const toDoTitle = document.querySelector('#inputToDoTitle')
                 addToDo(toDoTitle.value)
                 toDoTitle.value = ''
-                renderToDos()
+                renderToDosContainer()
                 console.log('save to do')
                 break
             case 'show-project-modal':
-                openDialog('#projectsDialog')
+                openDialog(PROJECT_DIALOG_ID)
                 break
             case 'show-todo-modal':
-                openDialog('#toDoDialog')
+                openDialog(TODO_DIALOG_ID)
                 break
             case 'select-project':
                 const projectId = event.target.closest('[data-project-id]').dataset.projectId
                 selectProject(projectId)
                 renderToDosContainer()
-                renderToDos()
-                renderProjects()
+                renderProjectContainer()
                 break
         }
-
     })
 }
 
 function renderTopContainer() {
+    const body = document.querySelector('body')
     const topContainer = document.createElement('div')
     topContainer.classList.add('topContainer')
     topContainer.textContent = 'To Do'
-    return topContainer
+    body.appendChild(topContainer)
 }
 
 function renderMainContent() {
+    const body = document.querySelector('body')
     const mainContent = document.createElement('div')
     mainContent.classList.add('mainContent')
-    return mainContent
+    body.appendChild(mainContent)
 }
+

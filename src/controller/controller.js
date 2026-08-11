@@ -36,5 +36,7 @@ export function addToDo (title) {
 
 export function getToDos () {
     const project = getSelectedProject()
-    return project.getToDos()
+    if (project) {
+        return project.getToDos()
+    }    
 }

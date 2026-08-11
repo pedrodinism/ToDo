@@ -1,15 +1,24 @@
-import { getProjects } from "../controller/controller"
+import { getProjects, createProject, getSelectedProject } from "../controller/controller"
+import { openDialog, closeDialog } from "../utils"
+
+export const PROJECT_DIALOG_ID = 'projectsDialog'
 
 export function renderProjectContainer() {
-    const projectContainer = document.querySelector('.projectContainer')
-    const body = document.querySelector('body')
+    let projectContainer = document.querySelector('.projectContainer')
+    let isNew = false 
 
-    if(projectContainer) {
-        projectContainer.innerHTML = ''
+    if(!projectContainer) {
+        isNew = true
     }
-    else {
+
+    const mainContent = document.querySelector('.mainContent')
+
+    if(isNew) {
         projectContainer = document.createElement('div')
         projectContainer.classList.add('projectContainer')
+    }
+    else {
+        projectContainer.innerHTML = ''
     }   
 
     const projectActions = document.createElement('div')
@@ -25,7 +34,9 @@ export function renderProjectContainer() {
     projectList.id = 'projectList'
     projectContainer.appendChild(projectList)    
 
-    body.appendChild(projectContainer)
+    if(isNew) {
+        mainContent.appendChild(projectContainer)
+    }
     
     renderProjectsDialog()
     renderProjects()
@@ -33,11 +44,11 @@ export function renderProjectContainer() {
 
 export function saveProject () {
     event.preventDefault()
-    closeDialog('#projectsDialog')
+    closeDialog(PROJECT_DIALOG_ID)
     const projectTitle = document.querySelector('#inputProjectTitle')
     createProject(projectTitle.value)
-    renderProjects()
     projectTitle.value = ''
+    renderProjectContainer()
 }
 
 function renderProjects() {
@@ -69,9 +80,12 @@ function renderProjectFolder(project) {
 }
 
 function renderProjectsDialog() {
+    if (document.querySelector(PROJECT_DIALOG_ID)) {
+        return
+    }
     const body = document.querySelector('body')
     const projectDialog = document.createElement('dialog')
-    projectDialog.id = 'projectsDialog'
+    projectDialog.id = PROJECT_DIALOG_ID
 
     const titleDialog = document.createElement('div')
     titleDialog.textContent = 'Edit project'
