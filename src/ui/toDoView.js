@@ -1,4 +1,4 @@
-import { getToDos } from "../controller/controller"
+import { getToDos, addToDo } from "../controller/controller"
 import { getSelectedProject } from "../controller/controller"
 import { openDialog, closeDialog } from "../utils"
 
@@ -46,6 +46,15 @@ export function renderToDosContainer() {
     mainContent.appendChild(toDosContainer)
     renderToDoDialog()
     renderToDos()
+}
+
+export function saveToDo() {
+    event.preventDefault()
+    closeDialog(TODO_DIALOG_ID)
+    const toDoTitle = document.querySelector('#inputToDoTitle')
+    addToDo(toDoTitle.value)
+    toDoTitle.value = ''
+    renderToDosContainer()
 }
 
 function renderToDos() {

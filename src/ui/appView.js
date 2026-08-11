@@ -1,5 +1,5 @@
-import { createProject, getProjects, selectProject, getSelectedProject, addToDo, getToDos } from "../controller/controller"
-import { renderToDosContainer, TODO_DIALOG_ID } from "./toDoView.js"
+import { selectProject } from "../controller/controller"
+import { renderToDosContainer, saveToDo, TODO_DIALOG_ID } from "./toDoView.js"
 import { renderProjectContainer, saveProject, PROJECT_DIALOG_ID } from "./projectView.js"
 import { openDialog, closeDialog } from "../utils"
 
@@ -19,13 +19,7 @@ export function init() {
                 saveProject()
                 break
             case 'save-todo':
-                event.preventDefault()
-                closeDialog(TODO_DIALOG_ID)
-                const toDoTitle = document.querySelector('#inputToDoTitle')
-                addToDo(toDoTitle.value)
-                toDoTitle.value = ''
-                renderToDosContainer()
-                console.log('save to do')
+                saveToDo()
                 break
             case 'show-project-modal':
                 openDialog(PROJECT_DIALOG_ID)
