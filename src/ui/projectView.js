@@ -81,7 +81,8 @@ function renderProjectFolder(project) {
     const actions = document.createElement('div')
     actions.classList.add('projectActions')
     const deleteBtn = document.createElement('button')
-    deleteBtn.textContent = '🗑️'
+    deleteBtn.setAttribute('data-action', 'delete-project')
+    deleteBtn.textContent = 'Delete'
 
     actions.appendChild(deleteBtn)
     div.appendChild(actions)
@@ -89,7 +90,7 @@ function renderProjectFolder(project) {
 
 function renderProjectsDialog() {
     if (document.querySelector(PROJECT_DIALOG_ID)) {
-        return
+        document.querySelector(PROJECT_DIALOG_ID).innerHTML = ''
     }
     const body = document.querySelector('body')
     const projectDialog = document.createElement('dialog')

@@ -16,4 +16,8 @@ export class Project {
     getToDos() {
         return this.todos
     }
+    
+    editProject(title) {
+        this.title = title
+    }
 }

@@ -9,7 +9,13 @@ export function getProjects() {
     return projects
 }
 
-export function createProject(title) {
+export function saveProject(title, projectId = null) {
+    if(projectId) {
+        const project = projects.find(project => project.id === projectId)
+        project.editProject(title)
+        return project
+    }
+
     const project = new Project(title)
     projects.push(project)
     return project
@@ -28,8 +34,8 @@ export function getSelectedProject() {
     return selectedProject
 }
 
-export function addToDo (title) {
-    const toDo = new ToDo(title)
+export function addToDo (title, description, dueDate, priority) {
+    const toDo = new ToDo(title, description, dueDate, priority)
     const project = projects.find(project => project.id === selectedProjectId)
     project.addToDo(toDo)
 }

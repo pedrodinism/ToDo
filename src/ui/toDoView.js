@@ -72,7 +72,27 @@ function renderToDoFolder(toDo) {
     div.classList.add('toDoFolder')
     div.setAttribute('data-action', 'select-todo')
     div.dataset.todoId = toDo.id
-    div.textContent = toDo.title
+
+    const toDoTitle = document.createElement('div')
+    toDoTitle.classList.add('label')
+    toDoTitle.textContent = 'Title: ' + toDo.title
+
+    const toDoDescription = document.createElement('div')
+    toDoDescription.classList.add('label')
+    toDoDescription.textContent = 'Description: ' + toDo.description
+
+    const toDoDueDate = document.createElement('div')
+    toDoDueDate.classList.add('label')
+    toDoDueDate.textContent = 'Due date: ' + toDo.dueDate
+
+    const toDoPriority = document.createElement('div')
+    toDoPriority.classList.add('label')
+    toDoPriority.textContent = 'Priority: ' + toDo.priority
+
+    div.appendChild(toDoTitle)
+    div.appendChild(toDoDescription)
+    div.appendChild(toDoDueDate)
+    div.appendChild(toDoPriority)
 
     const toDoList = document.querySelector('#toDosList')
     toDoList.appendChild(div)
@@ -88,20 +108,39 @@ function renderToDoDialog() {
 
     const titleDialog = document.createElement('div')
     titleDialog.textContent = 'Edit to do'
-    toDoDialog.appendChild(titleDialog)
 
     const todoForm = document.createElement('form')
+
     const titleInput = document.createElement('input')
     titleInput.placeholder = 'Title'
     titleInput.type = 'text'
-    titleInput.id = 'inputToDoTitle'
-    todoForm.appendChild(titleInput)
-    titleDialog.appendChild(todoForm)
+    titleInput.id = 'TODO_TITLE'
+    
+    const descriptionInput = document.createElement('input')
+    descriptionInput.placeholder = 'Description'
+    descriptionInput.type = 'text'
+    descriptionInput.id = 'TODO_DESC'
+
+    const dueDateInput = document.createElement('input')
+    dueDateInput.placeholder = 'Due date'
+    dueDateInput.type = 'date'
+    dueDateInput.id = 'TODO_DUEDATE'
+
+    const priorityInput = document.createElement('input')
+    priorityInput.placeholder = 'Priority'
+    priorityInput.type = 'integer'
+    priorityInput.id = 'TODO_PRIORITY'
 
     const saveProjectBtn = document.createElement('button')
     saveProjectBtn.textContent = 'Save'
     saveProjectBtn.setAttribute('data-action', 'save-todo')
+    
+    todoForm.appendChild(titleInput)
+    todoForm.appendChild(descriptionInput)
+    todoForm.appendChild(dueDateInput)
+    todoForm.appendChild(priorityInput)
     todoForm.appendChild(saveProjectBtn)
-
+    titleDialog.appendChild(todoForm)
+    toDoDialog.appendChild(titleDialog)
     body.appendChild(toDoDialog)
 }
