@@ -1,4 +1,4 @@
-import { getProjects, createProject, getSelectedProject } from "../controller/controller"
+import { getProjects, getSelectedProject } from "../controller/controller"
 import { openDialog, closeDialog } from "../utils"
 
 export const PROJECT_DIALOG_ID = 'projectsDialog'
@@ -37,18 +37,12 @@ export function renderProjectContainer() {
     if(isNew) {
         mainContent.appendChild(projectContainer)
     }
-    
-    renderProjectsDialog()
-    renderProjects()
-}
 
-export function saveProject () {
-    event.preventDefault()
-    closeDialog(PROJECT_DIALOG_ID)
-    const projectTitle = document.querySelector('#inputProjectTitle')
-    createProject(projectTitle.value)
-    projectTitle.value = ''
-    renderProjectContainer()
+    if(!document.querySelector('#' + PROJECT_DIALOG_ID)) {
+        renderProjectsDialog()
+    }
+    
+    renderProjects()
 }
 
 function renderProjects() {
@@ -70,13 +64,27 @@ function renderProjectFolder(project) {
     div.classList.add('projectFolder')
     div.setAttribute('data-action', 'select-project')
     div.dataset.projectId = project.id
-    div.textContent = project.title
+
+    const titleDiv = document.createElement('div')
+    titleDiv.classList.add('projectTitle')
+    titleDiv.textContent = project.title
+
+    div.appendChild(titleDiv)
+
     if(project.id === getSelectedProject()?.id) {
         div.classList.add('bg-color-yellow')
     }
+
     const projectList = document.querySelector('#projectList')
     projectList.appendChild(div)
 
+    const actions = document.createElement('div')
+    actions.classList.add('projectActions')
+    const deleteBtn = document.createElement('button')
+    deleteBtn.textContent = '🗑️'
+
+    actions.appendChild(deleteBtn)
+    div.appendChild(actions)
 }
 
 function renderProjectsDialog() {

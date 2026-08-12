@@ -1,4 +1,4 @@
-import { selectProject } from "../controller/controller"
+import { selectProject, createProject, addToDo } from "../controller/controller"
 import { renderToDosContainer, saveToDo, TODO_DIALOG_ID } from "./toDoView.js"
 import { renderProjectContainer, saveProject, PROJECT_DIALOG_ID } from "./projectView.js"
 import { openDialog, closeDialog } from "../utils"
@@ -14,12 +14,26 @@ export function renderLayout() {
 
 export function init() {
     document.addEventListener('click', (event) => {
-        switch(event.target.dataset.action) {
+
+        const actionElement = event.target.closest('[data-action]')
+        if (!actionElement) return
+
+        switch(actionElement.dataset.action) {            
             case 'save-project':
-                saveProject()
+                event.preventDefault()
+                closeDialog(PROJECT_DIALOG_ID)
+                const projectTitle = document.querySelector('#inputProjectTitle')
+                createProject(projectTitle.value)
+                projectTitle.value = ''
+                renderProjectContainer()
                 break
             case 'save-todo':
-                saveToDo()
+                event.preventDefault()
+                closeDialog(TODO_DIALOG_ID)
+                const toDoTitle = document.querySelector('#inputToDoTitle')
+                addToDo(toDoTitle.value)
+                toDoTitle.value = ''
+                renderToDosContainer()
                 break
             case 'show-project-modal':
                 openDialog(PROJECT_DIALOG_ID)

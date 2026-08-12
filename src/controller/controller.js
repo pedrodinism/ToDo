@@ -40,3 +40,10 @@ export function getToDos () {
         return project.getToDos()
     }    
 }
+
+export function removeProject (projectId) {
+    projects = projects.filter(project => project.id !== projectId)
+    if (projectId === selectedProjectId) {
+        selectedProjectId = null
+    }
+}
