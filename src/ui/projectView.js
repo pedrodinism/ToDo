@@ -37,10 +37,6 @@ export function renderProjectContainer() {
     if(isNew) {
         mainContent.appendChild(projectContainer)
     }
-
-    if(!document.querySelector('#' + PROJECT_DIALOG_ID)) {
-        renderProjectsDialog()
-    }
     
     renderProjects()
 }
@@ -84,17 +80,27 @@ function renderProjectFolder(project) {
     deleteBtn.setAttribute('data-action', 'delete-project')
     deleteBtn.textContent = 'Delete'
 
+    const editBtn = document.createElement('button')
+    editBtn.setAttribute('data-action', 'show-project-modal')
+    editBtn.textContent = 'Edit'
+
     actions.appendChild(deleteBtn)
+    actions.appendChild(editBtn)
     div.appendChild(actions)
 }
 
-function renderProjectsDialog() {
-    if (document.querySelector(PROJECT_DIALOG_ID)) {
-        document.querySelector(PROJECT_DIALOG_ID).innerHTML = ''
+export function renderProjectsDialog(projectId = null) {
+    let projectDialog = document.querySelector('#' + PROJECT_DIALOG_ID)
+
+    if (projectDialog) {
+        projectDialog.innerHTML = ''
     }
+    else {
+        projectDialog = document.createElement('dialog')
+        projectDialog.id = PROJECT_DIALOG_ID
+    }
+
     const body = document.querySelector('body')
-    const projectDialog = document.createElement('dialog')
-    projectDialog.id = PROJECT_DIALOG_ID
 
     const titleDialog = document.createElement('div')
     titleDialog.textContent = 'Edit project'
@@ -112,6 +118,12 @@ function renderProjectsDialog() {
     saveProjectBtn.textContent = 'Save'
     saveProjectBtn.setAttribute('data-action', 'save-project')
     projectForm.appendChild(saveProjectBtn)
+
+    if(projectId) {
+        projectDialog.dataset.projectId = projectId
+        const project = getProjects(projectId)
+        titleInput.value = project.title
+    }
 
     body.appendChild(projectDialog)
 }

@@ -6,5 +6,12 @@ export class ToDo {
         this.dueDate = dueDate
         this.priority = priority
         this.completedOn = null
-    }  
+    }
+
+    editToDo(title, description, dueDate, priority) {
+        this.title = title
+        this.description = description
+        this.dueDate = dueDate
+        this.priority = priority
+    }
 }

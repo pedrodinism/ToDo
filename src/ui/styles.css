@@ -104,4 +104,6 @@ button {
 
 .projectActions button {
     cursor: pointer;
+    font-size: 10px;
+    width: min-content;
 }

@@ -1,4 +1,4 @@
-import { getToDos } from "../controller/controller"
+import { getProjects, getToDos } from "../controller/controller"
 import { getSelectedProject } from "../controller/controller"
 import { openDialog, closeDialog } from "../utils"
 
@@ -44,10 +44,6 @@ export function renderToDosContainer() {
     toDosContainer.appendChild(toDosList)
 
     mainContent.appendChild(toDosContainer)
-    
-    if(!document.querySelector('#' + TODO_DIALOG_ID)) {
-        renderToDoDialog()
-    }
 
     renderToDos()
 }
@@ -98,13 +94,18 @@ function renderToDoFolder(toDo) {
     toDoList.appendChild(div)
 }
 
-function renderToDoDialog() {
-    if (document.querySelector(TODO_DIALOG_ID)) {
-        return
+export function renderToDoDialog(projectId = null, toDoId = null) {
+    let toDoDialog = document.querySelector('#' + TODO_DIALOG_ID)
+
+    if (toDoDialog) {
+        toDoDialog.innerHTML = ''
     }
+    else {
+        toDoDialog = document.createElement('dialog')
+        toDoDialog.id = TODO_DIALOG_ID
+    }
+
     const body = document.querySelector('body')
-    const toDoDialog = document.createElement('dialog')
-    toDoDialog.id = TODO_DIALOG_ID
 
     const titleDialog = document.createElement('div')
     titleDialog.textContent = 'Edit to do'
@@ -134,6 +135,15 @@ function renderToDoDialog() {
     const saveProjectBtn = document.createElement('button')
     saveProjectBtn.textContent = 'Save'
     saveProjectBtn.setAttribute('data-action', 'save-todo')
+
+    if(toDoId && projectId) {
+        const project = getProjects(projectId)
+        const toDo = project.toDos.find(todo => todo.id = toDoId)
+        titleInput.value = toDo.title
+        descriptionInput.value = toDo.description
+        dueDateInput.value = toDo.dueDate
+        priorityInput.value = toDo.priority
+    }
     
     todoForm.appendChild(titleInput)
     todoForm.appendChild(descriptionInput)

@@ -4,8 +4,10 @@ import { ToDo } from "../models/todo.js"
 let projects = []
 let selectedProjectId = null
 
-export function getProjects() {
-    console.log(projects)
+export function getProjects(projectId = null) {
+    if(projectId) {
+        return projects.find(project => project.id = projectId)
+    }
     return projects
 }
 
@@ -34,10 +36,19 @@ export function getSelectedProject() {
     return selectedProject
 }
 
-export function addToDo (title, description, dueDate, priority) {
-    const toDo = new ToDo(title, description, dueDate, priority)
-    const project = projects.find(project => project.id === selectedProjectId)
+export function saveToDo (title, description, dueDate, priority, projectId = null, toDoId = null) {
+    let toDo = null
+    let project = null
+    if(projectId) {
+        project = getProjects(projectId)
+        toDo = project.toDos.find(todo => todo.id = toDoId)
+        toDo.editToDo(title, description, dueDate, priority)
+        return toDo
+    }
+    toDo = new ToDo(title, description, dueDate, priority)
+    project = projects.find(project => project.id === selectedProjectId)
     project.addToDo(toDo)
+    return toDo
 }
 
 export function getToDos () {
