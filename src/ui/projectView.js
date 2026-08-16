@@ -100,6 +100,8 @@ export function renderProjectsDialog(projectId = null) {
         projectDialog.id = PROJECT_DIALOG_ID
     }
 
+    //projectDialog.dataset.projectId = null
+    delete projectDialog.dataset.projectId
     const body = document.querySelector('body')
 
     const titleDialog = document.createElement('div')

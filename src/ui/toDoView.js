@@ -124,6 +124,7 @@ export function renderToDoDialog(projectId = null, toDoId = null) {
         toDoDialog.id = TODO_DIALOG_ID
     }
 
+    delete toDoDialog.dataset.todoId
     const body = document.querySelector('body')
 
     const titleDialog = document.createElement('div')
@@ -157,7 +158,7 @@ export function renderToDoDialog(projectId = null, toDoId = null) {
 
     if(toDoId && projectId) {
         const project = getProjects(projectId)
-        const toDo = project.todos.find(todo => todo.id = toDoId)
+        const toDo = project.todos.find(todo => todo.id === toDoId)
         toDoDialog.dataset.todoId = toDoId
         titleInput.value = toDo.title
         descriptionInput.value = toDo.description

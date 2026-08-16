@@ -14,24 +14,24 @@ export function renderLayout() {
 
 export function init() {
     document.addEventListener('click', (event) => {
+        console.log(getProjects())
+        
         const actionElement = event.target.closest('[data-action]')
         if (!actionElement) return
 
-        // When 2 to dos are created and the user clicks edit on the second, there is an error (at some point the 1st one was being selected also)
+        console.log('closest project ' + event.target.closest('[data-project-id]')?.dataset.projectId)
+        console.log('closest to do ' + event.target.closest('[data-todo-id]')?.dataset.todoId)
 
-        let projectId = event.target.closest('[data-project-id]')?.dataset.projectId
-        let todoId = event.target.closest('[data-todo-id]')?.dataset.todoId
-
-        if(!projectId && todoId) {
-            projectId = getSelectedProject()?.id
-        }
+        let closestProjectId = event.target.closest('[data-project-id]')?.dataset.projectId
+        let closestToDoId = event.target.closest('[data-todo-id]')?.dataset.todoId
+        let selectedProjectId = getSelectedProject()?.id
 
         switch(actionElement.dataset.action) {            
             case 'save-project':
                 event.preventDefault()
                 closeDialog(PROJECT_DIALOG_ID)
                 const projectTitle = document.querySelector('#inputProjectTitle')
-                saveProject(projectTitle.value, projectId)
+                saveProject(projectTitle.value, closestProjectId)
                 projectTitle.value = ''
                 renderProjectContainer()
                 renderToDosContainer()
@@ -43,7 +43,7 @@ export function init() {
                 const desc = document.querySelector('#TODO_DESC')
                 const dueDate = document.querySelector('#TODO_DUEDATE')
                 const priority = document.querySelector('#TODO_PRIORITY')
-                saveToDo(title.value, desc.value, dueDate.value, priority.value, projectId, todoId)
+                saveToDo(title.value, desc.value, dueDate.value, priority.value, selectedProjectId, closestToDoId)
                 title.value = ''
                 desc.value = ''
                 dueDate.value = ''
@@ -51,26 +51,26 @@ export function init() {
                 renderToDosContainer()
                 break
             case 'show-project-modal': 
-                renderProjectsDialog(projectId)
+                renderProjectsDialog(closestProjectId)
                 openDialog(PROJECT_DIALOG_ID)
                 break
             case 'show-todo-modal':
                 console.log(getProjects())
-                renderToDoDialog(projectId, todoId)
+                renderToDoDialog(selectedProjectId, closestToDoId)
                 openDialog(TODO_DIALOG_ID)
                 break
             case 'select-project':
-                selectProject(projectId)
-                renderToDosContainer()
+                selectProject(closestProjectId)
                 renderProjectContainer()
+                renderToDosContainer()
                 break
             case 'delete-project':
-                removeProject(projectId)
+                removeProject(closestProjectId)
                 renderProjectContainer()
                 renderToDosContainer()
                 break
             case 'delete-todo':
-                removeToDo(projectId, todoId)
+                removeToDo(selectedProjectId, closestToDoId)
                 renderToDosContainer()
                 break
         }

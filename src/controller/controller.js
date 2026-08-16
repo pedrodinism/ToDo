@@ -6,7 +6,7 @@ let selectedProjectId = null
 
 export function getProjects(projectId = null) {
     if(projectId) {
-        return projects.find(project => project.id = projectId)
+        return projects.find(project => project.id === projectId)
     }
     return projects
 }
@@ -37,11 +37,15 @@ export function getSelectedProject() {
 }
 
 export function saveToDo (title, description, dueDate, priority, projectId = null, toDoId = null) {
+    if(!projectId) {
+        alert('project id not found')
+        return
+    }
     let toDo = null
     let project = null
     if(toDoId) {
         project = getProjects(projectId)
-        toDo = project.todos.find(todo => todo.id = toDoId)
+        toDo = project.todos.find(todo => todo.id === toDoId)
         toDo.editToDo(title, description, dueDate, priority)
         return toDo
     }
