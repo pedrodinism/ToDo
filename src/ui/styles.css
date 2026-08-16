@@ -64,7 +64,8 @@ body {
     background-color: yellow;
 }
 
-.projectTitle {
+.projectTitle,
+.toDoInfo {
     flex: 3;
     display: flex;
     align-items: center;
@@ -73,7 +74,16 @@ body {
     justify-content: center;
 }
 
-.projectActions {
+.projectTitle {
+    cursor: pointer;
+}
+
+.toDoInfo {
+    flex-direction: column;
+}
+
+.projectActions,
+.toDoActions {
     flex:1;
     display: flex;
     align-items: center;
@@ -102,7 +112,8 @@ button {
     cursor: pointer;
 }
 
-.projectActions button {
+.projectActions button,
+.toDoActions button {
     cursor: pointer;
     font-size: 10px;
     width: min-content;

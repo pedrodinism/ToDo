@@ -69,6 +69,19 @@ function renderToDoFolder(toDo) {
     div.setAttribute('data-action', 'select-todo')
     div.dataset.todoId = toDo.id
 
+    const toDoInfo = document.createElement('div')
+    toDoInfo.classList.add('toDoInfo')
+    const toDoActions = document.createElement('div')
+    toDoActions.classList.add('toDoActions')
+
+    const deleteButton = document.createElement('button')
+    deleteButton.setAttribute('data-action', 'delete-todo')
+    deleteButton.textContent = 'Delete'
+
+    const editButton = document.createElement('button')
+    editButton.setAttribute('data-action', 'show-todo-modal')
+    editButton.textContent = 'Edit'
+
     const toDoTitle = document.createElement('div')
     toDoTitle.classList.add('label')
     toDoTitle.textContent = 'Title: ' + toDo.title
@@ -85,10 +98,16 @@ function renderToDoFolder(toDo) {
     toDoPriority.classList.add('label')
     toDoPriority.textContent = 'Priority: ' + toDo.priority
 
-    div.appendChild(toDoTitle)
-    div.appendChild(toDoDescription)
-    div.appendChild(toDoDueDate)
-    div.appendChild(toDoPriority)
+    toDoInfo.appendChild(toDoTitle)
+    toDoInfo.appendChild(toDoDescription)
+    toDoInfo.appendChild(toDoDueDate)
+    toDoInfo.appendChild(toDoPriority)
+
+    toDoActions.appendChild(deleteButton)
+    toDoActions.appendChild(editButton)
+
+    div.appendChild(toDoInfo)
+    div.appendChild(toDoActions)
 
     const toDoList = document.querySelector('#toDosList')
     toDoList.appendChild(div)
@@ -138,7 +157,8 @@ export function renderToDoDialog(projectId = null, toDoId = null) {
 
     if(toDoId && projectId) {
         const project = getProjects(projectId)
-        const toDo = project.toDos.find(todo => todo.id = toDoId)
+        const toDo = project.todos.find(todo => todo.id = toDoId)
+        toDoDialog.dataset.todoId = toDoId
         titleInput.value = toDo.title
         descriptionInput.value = toDo.description
         dueDateInput.value = toDo.dueDate

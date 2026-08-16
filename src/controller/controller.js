@@ -39,9 +39,9 @@ export function getSelectedProject() {
 export function saveToDo (title, description, dueDate, priority, projectId = null, toDoId = null) {
     let toDo = null
     let project = null
-    if(projectId) {
+    if(toDoId) {
         project = getProjects(projectId)
-        toDo = project.toDos.find(todo => todo.id = toDoId)
+        toDo = project.todos.find(todo => todo.id = toDoId)
         toDo.editToDo(title, description, dueDate, priority)
         return toDo
     }
@@ -63,4 +63,12 @@ export function removeProject (projectId) {
     if (projectId === selectedProjectId) {
         selectedProjectId = null
     }
+}
+
+export function removeToDo (projectId, toDoId) {
+    const project = projects.find(project => project.id === projectId)
+    if (!project) {
+        return
+    }
+    project.removeToDo(toDoId)
 }
