@@ -1,8 +1,16 @@
 import { Project } from "../models/projects.js"
 import { ToDo } from "../models/todo.js"
+import { Storage } from "../storage/storage.js"
 
 let projects = []
 let selectedProjectId = null
+let storage = new Storage(projects)
+
+export function initializeData () {
+    const project = new Project ('My default project')
+    projects.push(project)
+    selectProject(project.id)
+}
 
 export function getProjects(projectId = null) {
     if(projectId) {
@@ -15,16 +23,14 @@ export function saveProject(title, projectId = null) {
     if(projectId) {
         const project = projects.find(project => project.id === projectId)
         project.editProject(title)
+        storage.save(projects)
         return project
     }
 
     const project = new Project(title)
     projects.push(project)
+    storage.save(projects)
     return project
-}
-
-export function testInit() {
-    const proj = createProject("The Odin Project")
 }
 
 export function selectProject(id) {
@@ -36,21 +42,21 @@ export function getSelectedProject() {
     return selectedProject
 }
 
-export function saveToDo (title, description, dueDate, priority, projectId = null, toDoId = null) {
+export function saveToDo (title, description, dueDate, priority, projectId, toDoId = null) {
     if(!projectId) {
-        alert('project id not found')
         return
     }
+    
     let toDo = null
-    let project = null
+    let project = getProjects(projectId)
+
     if(toDoId) {
-        project = getProjects(projectId)
         toDo = project.todos.find(todo => todo.id === toDoId)
         toDo.editToDo(title, description, dueDate, priority)
         return toDo
     }
+
     toDo = new ToDo(title, description, dueDate, priority)
-    project = projects.find(project => project.id === selectedProjectId)
     project.addToDo(toDo)
     return toDo
 }

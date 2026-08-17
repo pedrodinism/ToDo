@@ -1,6 +1,7 @@
 import { getProjects, getToDos } from "../controller/controller"
 import { getSelectedProject } from "../controller/controller"
 import { openDialog, closeDialog } from "../utils"
+import { format } from "date-fns"
 
 export const TODO_DIALOG_ID = 'toDoDialog'
 
@@ -16,27 +17,29 @@ export function renderToDosContainer() {
         toDosContainer.classList.add('toDosContainer')
     }   
 
-    const toDosActions = document.createElement('div')
-    toDosActions.classList.add('actions')
-    toDosContainer.appendChild(toDosActions)
+    const topSection = document.createElement('div')
+    topSection.classList.add('TopSection')
 
-    const titleToDo = document.createElement('div')
-    titleToDo.classList.add('title')
+    const titleSection = document.createElement('div')
+    titleSection.classList.add('TitleSection')
+    titleSection.textContent = 'To Dos'
+
+    const actionSection = document.createElement('div')
+    actionSection.classList.add('actions')
+
+    topSection.appendChild(titleSection)
+    topSection.appendChild(actionSection)
+    toDosContainer.appendChild(topSection)
 
     if(getSelectedProject()) {
-        titleToDo.textContent = 'Project ' + getSelectedProject().title
-    }
-    else {
-        titleToDo.textContent = 'Select a project to see its to dos...'
-    }
-    toDosContainer.appendChild(titleToDo)
-    
+        titleSection.textContent = getSelectedProject().title + '\'s to dos'
+    }    
     
     if(getSelectedProject() !== undefined) { //only render this if there is a project selected
         const btnNewTodo = document.createElement('button')
         btnNewTodo.textContent = 'Add To Do'
         btnNewTodo.setAttribute('data-action', 'show-todo-modal')
-        toDosActions.appendChild(btnNewTodo)
+        actionSection.appendChild(btnNewTodo)
     }
 
     const toDosList = document.createElement('div')
@@ -92,7 +95,7 @@ function renderToDoFolder(toDo) {
 
     const toDoDueDate = document.createElement('div')
     toDoDueDate.classList.add('label')
-    toDoDueDate.textContent = 'Due date: ' + toDo.dueDate
+    toDoDueDate.textContent = 'Due date: ' + format(toDo.dueDate, 'dd MMM yyyy')
 
     const toDoPriority = document.createElement('div')
     toDoPriority.classList.add('label')
@@ -149,7 +152,9 @@ export function renderToDoDialog(projectId = null, toDoId = null) {
 
     const priorityInput = document.createElement('input')
     priorityInput.placeholder = 'Priority'
-    priorityInput.type = 'integer'
+    priorityInput.type = 'number'
+    priorityInput.min = '1'
+    priorityInput.max = '5'
     priorityInput.id = 'TODO_PRIORITY'
 
     const saveProjectBtn = document.createElement('button')

@@ -35,18 +35,31 @@ body {
     border-right: 1px solid black;
 }
 
-.actions {
+.TopSection {
     display: flex;
     justify-content: end;
     align-items: center;
-    margin: 20px;
+    margin: 20px 20px 20px 0;
+}
+
+.TitleSection {
+    font-size: x-large;
+    font-weight: 800;
+}
+
+.actions {
+    text-align: right;
+}
+
+.TopSection div {
+    flex: 1;
 }
 
 .projectFolder,
 .toDoFolder {
     border: 1px solid black;
-    width: 150px;
-    height: 150px;
+    width: 175px;
+    height: 175px;
     display: flex;
     align-items: center;
     justify-content: center;

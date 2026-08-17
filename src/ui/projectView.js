@@ -19,7 +19,14 @@ export function renderProjectContainer() {
     }
     else {
         projectContainer.innerHTML = ''
-    }   
+    }
+
+    const projectTopSection = document.createElement('div')
+    projectTopSection.classList.add('TopSection')
+
+    const projectTitle = document.createElement('div')
+    projectTitle.classList.add('TitleSection')
+    projectTitle.textContent = 'Projects'
 
     const projectActions = document.createElement('div')
     projectActions.classList.add('actions')
@@ -28,7 +35,9 @@ export function renderProjectContainer() {
     btnAddProject.textContent = 'New project'
     btnAddProject.setAttribute('data-action', 'show-project-modal')
     projectActions.appendChild(btnAddProject)
-    projectContainer.appendChild(projectActions)
+    projectTopSection.appendChild(projectTitle)
+    projectTopSection.appendChild(projectActions)
+    projectContainer.appendChild(projectTopSection)
 
     const projectList = document.createElement('div')
     projectList.id = 'projectList'
@@ -100,7 +109,6 @@ export function renderProjectsDialog(projectId = null) {
         projectDialog.id = PROJECT_DIALOG_ID
     }
 
-    //projectDialog.dataset.projectId = null
     delete projectDialog.dataset.projectId
     const body = document.querySelector('body')
 
