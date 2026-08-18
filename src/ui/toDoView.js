@@ -1,7 +1,7 @@
 import { getProjects, getToDos } from "../controller/controller"
 import { getSelectedProject } from "../controller/controller"
 import { openDialog, closeDialog } from "../utils"
-import { format } from "date-fns"
+import { format, parseISO } from "date-fns"
 
 export const TODO_DIALOG_ID = 'toDoDialog'
 
@@ -93,17 +93,20 @@ function renderToDoFolder(toDo) {
     toDoDescription.classList.add('label')
     toDoDescription.textContent = 'Description: ' + toDo.description
 
-    const toDoDueDate = document.createElement('div')
-    toDoDueDate.classList.add('label')
-    toDoDueDate.textContent = 'Due date: ' + format(toDo.dueDate, 'dd MMM yyyy')
-
     const toDoPriority = document.createElement('div')
     toDoPriority.classList.add('label')
     toDoPriority.textContent = 'Priority: ' + toDo.priority
 
     toDoInfo.appendChild(toDoTitle)
     toDoInfo.appendChild(toDoDescription)
-    toDoInfo.appendChild(toDoDueDate)
+
+    if(toDo.dueDate) {
+        const toDoDueDate = document.createElement('div')
+        toDoDueDate.classList.add('label')
+        toDoDueDate.textContent = 'Due date: ' + format(toDo.dueDate, 'dd MMM yyyy')
+        toDoInfo.appendChild(toDoDueDate)
+    }
+
     toDoInfo.appendChild(toDoPriority)
 
     toDoActions.appendChild(deleteButton)

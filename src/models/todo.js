@@ -1,6 +1,6 @@
 export class ToDo {
-    constructor(title, description, dueDate, priority) {
-        this.id = crypto.randomUUID()
+    constructor(title, description, dueDate, priority, id = crypto.randomUUID()) {
+        this.id = id
         this.title = title
         this.description = description
         this.dueDate = dueDate

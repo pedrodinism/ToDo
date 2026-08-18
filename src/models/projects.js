@@ -1,6 +1,6 @@
 export class Project {
-    constructor(title) {
-        this.id = crypto.randomUUID()
+    constructor(title, id = crypto.randomUUID()) {
+        this.id = id
         this.title = title
         this.todos = []
     }
