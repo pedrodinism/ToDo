@@ -1,7 +1,7 @@
-export function openDialog (id) {
-    document.querySelector('#' + id).showModal()
+export function openDialog(id) {
+  document.querySelector("#" + id).showModal();
 }
 
-export function closeDialog (id) {
-    document.querySelector('#' + id).close()
+export function closeDialog(id) {
+  document.querySelector("#" + id).close();
 }

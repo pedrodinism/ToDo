@@ -1,133 +1,133 @@
 body {
-    box-sizing: content-box;
-    margin: 0;
-    width: 100vw;
-    height: 100vh;
+  box-sizing: content-box;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
 }
 
 .mainContent {
-    display: flex;
+  display: flex;
 }
 
 .topContainer {
-    height: 50px;
-    background-color: darkseagreen;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 30px;
-    font-weight: 600;
+  height: 50px;
+  background-color: darkseagreen;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 30px;
+  font-weight: 600;
 }
 
 .projectContainer,
 .toDosContainer {
-    height: calc(100vh - 50px - 20px - 20px);
-    width: 50vw;
+  height: calc(100vh - 50px - 20px - 20px);
+  width: 50vw;
 }
 
 .projectContainer,
 .toDosContainer {
-    margin: 20px;
+  margin: 20px;
 }
 
 .projectContainer {
-    border-right: 1px solid black;
+  border-right: 1px solid black;
 }
 
 .TopSection {
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    margin: 20px 20px 20px 0;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin: 20px 20px 20px 0;
 }
 
 .TitleSection {
-    font-size: x-large;
-    font-weight: 800;
+  font-size: x-large;
+  font-weight: 800;
 }
 
 .actions {
-    text-align: right;
+  text-align: right;
 }
 
 .TopSection div {
-    flex: 1;
+  flex: 1;
 }
 
 .projectFolder,
 .toDoFolder {
-    border: 1px solid black;
-    width: 175px;
-    height: 175px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+  border: 1px solid black;
+  width: 175px;
+  height: 175px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 #projectList,
 #toDosList {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .bg-color-yellow {
-    background-color: yellow;
+  background-color: yellow;
 }
 
 .projectTitle,
 .toDoInfo {
-    flex: 3;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid black;
-    width: 100%;
-    justify-content: center;
+  flex: 3;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid black;
+  width: 100%;
+  justify-content: center;
 }
 
 .projectTitle {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .toDoInfo {
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .projectActions,
 .toDoActions {
-    flex:1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 input {
-    margin-bottom: 20px;
-    width: 300px;
-    height: 20px;
+  margin-bottom: 20px;
+  width: 300px;
+  height: 20px;
 }
 
 button {
-    width: fit-content;
-    color: white;
-    background: darkseagreen;
-    border: none;
-    font-weight: 800;
-    min-width: 70px;
-    min-height: 30px;
-    cursor: pointer;
+  width: fit-content;
+  color: white;
+  background: darkseagreen;
+  border: none;
+  font-weight: 800;
+  min-width: 70px;
+  min-height: 30px;
+  cursor: pointer;
 }
 
 .projectActions button,
 .toDoActions button {
-    cursor: pointer;
-    font-size: 10px;
-    width: min-content;
+  cursor: pointer;
+  font-size: 10px;
+  width: min-content;
 }
